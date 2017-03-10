@@ -168,14 +168,14 @@ public class Assert {
      */
     private static AssertException createException(String t1, Object... t2) {
         if (t2.length == 0) {
-            return createException(t1);
+            return new AssertException(t1);
         } else if (t2.length == 1) {
-            return createException(t1, t2[0].toString());
+            return new AssertException(t1, t2[0].toString());
         } else {
             Object[] params = new Object[t2.length - 1];
             System.arraycopy(t2, 1, params, 0, params.length);
             FormattingTuple ft = MessageFormatter.arrayFormat(t2[0].toString(), params);
-            return createException(t1, ft.getMessage());
+            return new AssertException(t1, ft.getMessage());
         }
     }
 

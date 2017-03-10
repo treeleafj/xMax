@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     private Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler
-    public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t, ModelMap modelMap) {
+    public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
         request.setAttribute("_exception", t);
         String path = request.getServletPath();
         String ext = UriUtils.getExt(path);

@@ -6,8 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
+import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
+import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
+import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
 import org.treeleafj.xmax.date.DateUtils;
 
 import java.text.ParseException;
@@ -48,5 +53,31 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
         return new GlobalExceptionHandler();
     }
 
+    @Bean
+    public PrintLogHandlerInerceptor printLogHandlerInerceptor() {
+        return new PrintLogHandlerInerceptor();
+    }
 
+    @Bean
+    public ParamHandlerMethodArgumentResolver paramHandlerMethodArgumentResolver() {
+        return new ParamHandlerMethodArgumentResolver();
+    }
+
+    @Bean
+    public ClientInfoHandlerMethodArgumentResolver clientInfoHandlerMethodArgumentResolver() {
+        return new ClientInfoHandlerMethodArgumentResolver();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(paramHandlerMethodArgumentResolver());
+        argumentResolvers.add(clientInfoHandlerMethodArgumentResolver());
+        super.addArgumentResolvers(argumentResolvers);
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(printLogHandlerInerceptor());//添加接口调用打印
+        super.addInterceptors(registry);
+    }
 }
