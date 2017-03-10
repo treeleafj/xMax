@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>xMax-common</module>
+        <module>xMax-boot-starter</module>
     </modules>
 
     <!--配置依赖-->
