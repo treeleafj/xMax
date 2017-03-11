@@ -24,6 +24,9 @@ public class JsonRender extends Render {
 
     private Object data;
 
+    public JsonRender() {
+    }
+
     public JsonRender(String msg) {
         this.msg = msg;
     }

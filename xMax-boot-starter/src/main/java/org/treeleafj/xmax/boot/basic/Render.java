@@ -35,6 +35,10 @@ public abstract class Render implements Serializable {
      */
     public final static String CONTENT_TYPE_JAVASCRIPT = "application/javascript";
 
+    public static Render json() {
+        return new JsonRender();
+    }
+
     public static Render json(Object obj) {
         return new JsonRender(obj);
     }
