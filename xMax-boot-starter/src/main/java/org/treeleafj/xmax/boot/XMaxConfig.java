@@ -30,7 +30,15 @@ import java.util.Locale;
 @ConfigurationProperties("xMax")
 public class XMaxConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * 页面错误跳转到的视图页面地址
+     */
     private String errorView = "error";
+
+    /**
+     * 是否打印接口访问日志
+     */
+    private boolean printLog = true;
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -88,7 +96,9 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(printLogHandlerInerceptor());//添加接口调用打印
+        if (printLog) {
+            registry.addInterceptor(printLogHandlerInerceptor());//添加接口调用打印
+        }
         super.addInterceptors(registry);
     }
 }
