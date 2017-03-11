@@ -11,40 +11,40 @@ public abstract class RetCode {
     /**
      * 成功
      */
-    public final static String OK = "000000";
+    public final static String OK = "0000";
 
     /**
      * 未知异常
      */
-    public final static String FAIL_UNKNOWN = "999999";
+    public final static String FAIL_UNKNOWN = "99999";
 
     /**
      * 逻辑错误
      */
-    public final static String FAIL_LOGIC = "999998";
+    public final static String FAIL_LOGIC = "9998";
 
     /**
      * 参数异常
      */
-    public final static String FAIL_PARAM = "999997";
+    public final static String FAIL_PARAM = "9997";
 
     /**
      * 缓存操作异常
      */
-    public final static String FAIL_CACHE = "999996";
+    public final static String FAIL_CACHE = "9996";
 
     /**
      * 数据库操作异常
      */
-    public final static String FAIL_DB = "999995";
+    public final static String FAIL_DB = "9995";
 
     /**
      * 远程访问异常
      */
-    public final static String FAIL_REMOTE = "999994";
+    public final static String FAIL_REMOTE = "9994";
 
     /**
      * 未登陆异常
      */
-    public final static String FAIL_UNLOGIN = "999993";
+    public final static String FAIL_UNLOGIN = "9993";
 }

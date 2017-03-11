@@ -8,12 +8,14 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
 import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
+import org.treeleafj.xmax.boot.handler.RenderHandlerMethodReturnValueHandler;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
 
@@ -84,6 +86,17 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     @Bean
     public ClientInfoHandlerMethodArgumentResolver clientInfoHandlerMethodArgumentResolver() {
         return new ClientInfoHandlerMethodArgumentResolver();
+    }
+
+    @Bean
+    public RenderHandlerMethodReturnValueHandler redirectHandlerMethodReturnValueHandler() {
+        return new RenderHandlerMethodReturnValueHandler();
+    }
+
+    @Override
+    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+        returnValueHandlers.add(redirectHandlerMethodReturnValueHandler());
+        super.addReturnValueHandlers(returnValueHandlers);
     }
 
     @Override
