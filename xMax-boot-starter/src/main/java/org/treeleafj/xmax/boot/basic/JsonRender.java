@@ -8,6 +8,7 @@ import org.treeleafj.xmax.json.Jsoner;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,10 +45,18 @@ public class JsonRender extends Render {
     public void render(HttpServletResponse response) {
         Map<String, Object> map;
         if (data != null) {
-            try {
-                map = PropertyUtils.describe(data);
-            } catch (Exception e) {
-                throw new RuntimeException("转义数据失败", e);
+            if (this.data instanceof Map) {
+                map = (Map) this.data;
+            } else if (this.data instanceof Collection || this.data.getClass().isArray()) {
+                map = new HashMap<>();
+                map.put("list", this.data);
+            } else {
+                try {
+                    map = PropertyUtils.describe(this.data);
+                    map.remove("class");
+                } catch (Exception e) {
+                    throw new RuntimeException("转义数据失败", e);
+                }
             }
         } else {
             map = new HashMap<>();
