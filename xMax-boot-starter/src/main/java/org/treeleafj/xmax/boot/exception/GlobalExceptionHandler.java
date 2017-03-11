@@ -2,10 +2,11 @@ package org.treeleafj.xmax.boot.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.ui.ModelMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+import org.treeleafj.xmax.boot.XMaxConfig;
 import org.treeleafj.xmax.boot.utils.RequestUtils;
 import org.treeleafj.xmax.boot.utils.UriUtils;
 import org.treeleafj.xmax.exception.BaseException;
@@ -26,6 +27,9 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     private Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @Autowired
+    private XMaxConfig xMaxConfig;
 
     @ExceptionHandler
     public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
@@ -56,7 +60,7 @@ public class GlobalExceptionHandler {
             RequestUtils.writeJson(model, response);
             return null;
         } else {
-            ModelAndView mav = new ModelAndView("error");
+            ModelAndView mav = new ModelAndView(xMaxConfig.getErrorView());
             if (errorInfo.getException() instanceof BaseException) {
                 BaseException exception = (BaseException) errorInfo.getException();
                 mav.addObject("code", exception.getCode());

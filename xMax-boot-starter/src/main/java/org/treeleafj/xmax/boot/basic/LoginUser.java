@@ -21,4 +21,11 @@ public @interface LoginUser {
      */
     boolean require() default true;
 
+    /**
+     * 是否重新加载
+     *
+     * @return
+     */
+    boolean reload() default false;
+
 }

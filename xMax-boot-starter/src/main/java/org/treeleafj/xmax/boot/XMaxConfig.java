@@ -1,6 +1,7 @@
 package org.treeleafj.xmax.boot;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.format.FormatterRegistry;
@@ -13,6 +14,7 @@ import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
 import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
+import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
 
 import java.text.ParseException;
@@ -24,8 +26,11 @@ import java.util.Locale;
  * @author leaf
  * @date 2017-03-10 16:00
  */
+@Data
 @ConfigurationProperties("xMax")
 public class XMaxConfig extends WebMvcConfigurerAdapter {
+
+    private String errorView = "error";
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -64,6 +69,11 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public LoginUserSessionHandlerMethodArgumentResolver loginUserSessionHandlerMethodArgumentResolver() {
+        return new LoginUserSessionHandlerMethodArgumentResolver();
+    }
+
+    @Bean
     public ClientInfoHandlerMethodArgumentResolver clientInfoHandlerMethodArgumentResolver() {
         return new ClientInfoHandlerMethodArgumentResolver();
     }
@@ -72,6 +82,7 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(paramHandlerMethodArgumentResolver());
         argumentResolvers.add(clientInfoHandlerMethodArgumentResolver());
+        argumentResolvers.add(loginUserSessionHandlerMethodArgumentResolver());
         super.addArgumentResolvers(argumentResolvers);
     }
 
