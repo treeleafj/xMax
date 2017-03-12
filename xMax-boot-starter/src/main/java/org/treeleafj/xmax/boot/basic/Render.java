@@ -1,6 +1,7 @@
 package org.treeleafj.xmax.boot.basic;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -57,6 +58,26 @@ public abstract class Render implements Serializable {
 
     public static Render redirect(String path, Map<String, String> param) {
         return new RedirectRender(path, param);
+    }
+
+    public static Render text(String text) {
+        return new TextRender(text);
+    }
+
+    public static Render text(String contentType, String text) {
+        return new TextRender(contentType, text);
+    }
+
+    public static Render text(String contentType, String text, String charset) {
+        return new TextRender(contentType, text, charset);
+    }
+
+    public static Render io(InputStream in) {
+        return new IORender(in);
+    }
+
+    public static Render io(String contentType, InputStream in) {
+        return new IORender(contentType, in);
     }
 
     public abstract void render(HttpServletResponse response);

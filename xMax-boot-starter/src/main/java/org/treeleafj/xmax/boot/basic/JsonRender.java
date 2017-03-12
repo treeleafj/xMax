@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * json格式的返回
+ *
  * @author leaf
  * @date 2017-03-11 17:35
  */

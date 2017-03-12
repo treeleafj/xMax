@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 文本类型的返回
+ *
  * @author leaf
  * @date 2017-03-11 17:44
  */
@@ -46,6 +48,19 @@ public class TextRender extends Render {
     public TextRender(String contentType, String content) {
         this.contentType = contentType;
         this.content = content;
+    }
+
+    /**
+     * 返回指定的contentType协议的content内容
+     *
+     * @param contentType contentType协议头
+     * @param content     内容
+     * @param charset     字符串集
+     */
+    public TextRender(String contentType, String content, String charset) {
+        this.contentType = contentType;
+        this.content = content;
+        this.charset = charset;
     }
 
     @Override
