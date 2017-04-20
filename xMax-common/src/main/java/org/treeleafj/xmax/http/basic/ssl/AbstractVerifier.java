@@ -65,7 +65,7 @@ public abstract class AbstractVerifier implements X509HostnameVerifier {
             final InputStream in = ssl.getInputStream();
             in.available();
             /*
-              If you're looking at the 2 lines of code above because
+              If you're looking at the 2 lines of merchantNo above because
               you're running into a problem, you probably have two
               options:
 
@@ -204,7 +204,7 @@ public abstract class AbstractVerifier implements X509HostnameVerifier {
     public static boolean acceptableCountryWildcard(final String cn) {
         final String parts[] = cn.split("\\.");
         if (parts.length != 3 || parts[2].length() != 2) {
-            return true; // it's not an attempt to wildcard a 2TLD within a country code
+            return true; // it's not an attempt to wildcard a 2TLD within a country merchantNo
         }
         return Arrays.binarySearch(BAD_COUNTRY_2LDS, parts[1]) < 0;
     }
@@ -212,7 +212,7 @@ public abstract class AbstractVerifier implements X509HostnameVerifier {
     boolean validCountryWildcard(final String cn) {
         final String parts[] = cn.split("\\.");
         if (parts.length != 3 || parts[2].length() != 2) {
-            return true; // it's not an attempt to wildcard a 2TLD within a country code
+            return true; // it's not an attempt to wildcard a 2TLD within a country merchantNo
         }
         return Arrays.binarySearch(BAD_COUNTRY_2LDS, parts[1]) < 0;
     }
@@ -226,7 +226,7 @@ public abstract class AbstractVerifier implements X509HostnameVerifier {
                 Parses a X.500 distinguished name for the value of the
                 "Common Name" field.  This is done a bit sloppy right
                  now and should probably be done a bit more according to
-                <code>RFC 2253</code>.
+                <merchantNo>RFC 2253</merchantNo>.
 
            I've noticed that toString() seems to do a better job than
            getName() on these X500Principal objects, so I'm hoping that

@@ -64,7 +64,7 @@ public class JsonRender extends Render {
             map = new HashMap<>();
         }
 
-        map.put("code", code);
+        map.put("merchantNo", code);
         map.put("msg", msg);
 
         response.setContentType("application/json;charset=utf-8");
