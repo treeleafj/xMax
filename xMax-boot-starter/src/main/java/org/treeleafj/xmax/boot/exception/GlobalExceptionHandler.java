@@ -51,10 +51,10 @@ public class GlobalExceptionHandler {
             Map model = new HashMap();
             if (errorInfo.getException() instanceof BaseException) {
                 BaseException exception = (BaseException) errorInfo.getException();
-                model.put("merchantNo", exception.getCode());
+                model.put("code", exception.getCode());
                 model.put("msg", exception.getMessage());
             } else {
-                model.put("merchantNo", RetCode.FAIL_UNKNOWN);
+                model.put("code", RetCode.FAIL_UNKNOWN);
                 model.put("msg", "网络繁忙,请稍后尝试!");
             }
             RequestUtils.writeJson(model, response);
@@ -63,10 +63,10 @@ public class GlobalExceptionHandler {
             ModelAndView mav = new ModelAndView(xMaxConfig.getErrorView());
             if (errorInfo.getException() instanceof BaseException) {
                 BaseException exception = (BaseException) errorInfo.getException();
-                mav.addObject("merchantNo", exception.getCode());
+                mav.addObject("code", exception.getCode());
                 mav.addObject("msg", exception.getMessage());
             } else {
-                mav.addObject("merchantNo", RetCode.FAIL_UNKNOWN);
+                mav.addObject("code", RetCode.FAIL_UNKNOWN);
                 mav.addObject("msg", "网络繁忙,请稍后尝试!");
             }
             return mav;
