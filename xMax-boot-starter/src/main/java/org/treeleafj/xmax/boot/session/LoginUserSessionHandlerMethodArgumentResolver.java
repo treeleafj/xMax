@@ -1,5 +1,6 @@
 package org.treeleafj.xmax.boot.session;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -18,11 +19,14 @@ import javax.servlet.http.HttpServletRequest;
  * @author leaf
  * @date 2016-10-25 12:18
  */
-public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
+public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver, InitializingBean {
 
     private String unLoginErrorMessage = "请先登录!";
 
-    private SessionKey sessionKey = new SessionKey("_login_user");
+    private static final SessionKey DEFAULT_SESSION_KEY = new SessionKey("_login_user");
+
+    @Autowired(required = false)
+    private SessionKey sessionKey;
 
     @Autowired(required = false)
     private LoginStoreStrategy loginStoreStrategy;
@@ -70,5 +74,12 @@ public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMet
         }
 
         return null;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (this.sessionKey == null) {
+            this.sessionKey = DEFAULT_SESSION_KEY;
+        }
     }
 }

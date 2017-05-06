@@ -1,6 +1,7 @@
 package org.treeleafj.xmax.boot;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -14,6 +15,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Documented
-@EnableConfigurationProperties(XMaxConfig.class)
+@EnableConfigurationProperties({XMaxConfig.class})
+@Import(XMaxBeans.class)
 public @interface EnableXMax {
 }
