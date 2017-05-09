@@ -25,6 +25,7 @@ public class JsonRender extends Render {
     protected Map<String, Object> map;
 
     public JsonRender() {
+        this(RetCode.OK, null);
     }
 
     public JsonRender(String msg) {
