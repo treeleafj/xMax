@@ -13,10 +13,7 @@ import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
-import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
-import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
-import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
-import org.treeleafj.xmax.boot.handler.RenderHandlerMethodReturnValueHandler;
+import org.treeleafj.xmax.boot.handler.*;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
 
@@ -40,6 +37,9 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     private PrintLogHandlerInerceptor printLogHandlerInerceptor;
 
     @Autowired
+    private SqlInjectInterceptor sqlInjectInterceptor;
+
+    @Autowired
     private ParamHandlerMethodArgumentResolver paramHandlerMethodArgumentResolver;
 
     @Autowired
@@ -60,6 +60,11 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
      * 是否打印接口访问日志
      */
     private boolean printLog = true;
+
+    /**
+     * 是否添加参数检测拦截器检查参数中的sql注入等问题
+     */
+    private boolean checkParam = false;
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -98,6 +103,9 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        if (checkParam) {
+            registry.addInterceptor(sqlInjectInterceptor);
+        }
         if (printLog) {
             registry.addInterceptor(printLogHandlerInerceptor);//添加接口调用打印
         }
