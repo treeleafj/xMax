@@ -2,10 +2,7 @@ package org.treeleafj.xmax.boot;
 
 import org.springframework.context.annotation.Bean;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
-import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
-import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
-import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
-import org.treeleafj.xmax.boot.handler.RenderHandlerMethodReturnValueHandler;
+import org.treeleafj.xmax.boot.handler.*;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 
 /**
@@ -41,5 +38,10 @@ public class XMaxBeans {
     @Bean
     public RenderHandlerMethodReturnValueHandler renderHandlerMethodReturnValueHandler() {
         return new RenderHandlerMethodReturnValueHandler();
+    }
+
+    @Bean
+    public SqlInjectInterceptor sqlInjectInterceptor() {
+        return new SqlInjectInterceptor();
     }
 }
