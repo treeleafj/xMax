@@ -13,9 +13,9 @@ public class SqlUtils {
 
     private static final Pattern SQL_PATTERN_ANNOTATION = Pattern.compile("^.*/\\*.*?\\*/$");
 
-    private String[] badStrs = null;
+    private static String[] badStrs = null;
 
-    {
+    static {
         // 过滤掉的sql关键字，可以手动添加
         String badStr = "and|exec|execute|insert|select|delete|update|count|drop|chr|mid|master|truncate|"
                 + "char|declare|sitename|net user|xp_cmdshell|or|create|"
@@ -31,11 +31,11 @@ public class SqlUtils {
      * @param s
      * @return
      */
-    public boolean isSqlInject(String s) {
+    public static boolean isSqlInject(String s) {
         return SQL_PATTERN_ANNOTATION.matcher(s).find() || sqlValidate(s);
     }
 
-    private boolean sqlValidate(String str) {
+    private static boolean sqlValidate(String str) {
         String[] array = str.toLowerCase().split("\\s");
         return CollectionUtils.containsAny(Arrays.asList(array), Arrays.asList(badStrs));
     }
