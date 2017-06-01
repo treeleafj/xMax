@@ -12,6 +12,7 @@ import org.treeleafj.xmax.exception.RetCode;
 import org.treeleafj.xmax.exception.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * 专门处理接口方法上获取登录对象,解耦HttpServletRequest
@@ -49,7 +50,11 @@ public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMet
 
         Class<?> parameterType = methodParameter.getParameterType();
 
-        Object returnValue = request.getSession().getAttribute(sessionKey.getKey());
+        HttpSession session = request.getSession(false);
+        Object returnValue = null;
+        if (session != null) {
+            returnValue = request.getSession().getAttribute(sessionKey.getKey());
+        }
 
         //有存储策略,则使用存储策略,如果没有,采用默认的,且只支持返回登录用户对象,不支持返回登录用户的ID
         if (loginStoreStrategy != null && returnValue != null) {
