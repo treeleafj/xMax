@@ -16,7 +16,7 @@ public abstract class RetCode {
     /**
      * 未知异常
      */
-    public final static String FAIL_UNKNOWN = "99999";
+    public final static String FAIL_UNKNOWN = "9999";
 
     /**
      * 逻辑错误
