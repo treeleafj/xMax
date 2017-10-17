@@ -1,5 +1,6 @@
 package org.treeleafj.xmax.bean;
 
+import lombok.Data;
 import org.treeleafj.xmax.safe.Assert;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.io.Serializable;
  * @Author leaf
  * 2015/10/28 0028 23:04.
  */
+@Data
 public class Pageable implements Serializable {
 
     /**
@@ -21,6 +23,11 @@ public class Pageable implements Serializable {
      * 每页大小,从1开始
      */
     private int pageSize = 10;
+
+    /**
+     * 是否统计总记录数
+     */
+    private boolean countRows = true;
 
     public Pageable() {
     }
@@ -37,22 +44,8 @@ public class Pageable implements Serializable {
         return (this.pageNo - 1) * this.pageSize;
     }
 
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public Pageable setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-        return this;
-    }
-
     public int getPageSize() {
         return pageSize;
-    }
-
-    public Pageable setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-        return this;
     }
 
     /**
