@@ -6,8 +6,6 @@ package org.treeleafj.xmax.safe;
  */
 public class Base64 {
 
-    private static final byte[] CHUNK_SEPARATOR = new byte[]{(byte) 13, (byte) 10};
-
     /**
      * 将byte数据进行Base64编码
      *
@@ -15,7 +13,7 @@ public class Base64 {
      * @return
      */
     public static String encode(byte[] data) {
-        return new org.apache.commons.codec.binary.Base64(0, CHUNK_SEPARATOR, false).encodeToString(data);
+        return org.apache.commons.codec.binary.Base64.encodeBase64String(data);
     }
 
     /**
@@ -25,7 +23,7 @@ public class Base64 {
      * @return
      */
     public static byte[] decode(String data) {
-        return new org.apache.commons.codec.binary.Base64(0, CHUNK_SEPARATOR, false).decode(data);
+        return org.apache.commons.codec.binary.Base64.decodeBase64(data);
     }
 
     /**
