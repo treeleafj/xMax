@@ -40,6 +40,11 @@ public class Pageable implements Serializable {
         this.pageSize = pageSize;
     }
 
+    public Pageable(int pageNo, int pageSize, boolean countRows) {
+        this(pageNo, pageSize);
+        this.countRows = countRows;
+    }
+
     public int getOffset() {
         return (this.pageNo - 1) * this.pageSize;
     }
