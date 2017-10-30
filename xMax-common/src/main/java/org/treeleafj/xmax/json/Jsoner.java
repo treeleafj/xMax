@@ -44,7 +44,7 @@ public class Jsoner {
      * @param deserializer 解析器
      */
     public static void addDeserializerConfig(Type type, ObjectDeserializer deserializer) {
-        ParserConfig.getGlobalInstance().getGlobalInstance().putDeserializer(type, deserializer);
+        ParserConfig.getGlobalInstance().putDeserializer(type, deserializer);
     }
 
     /**

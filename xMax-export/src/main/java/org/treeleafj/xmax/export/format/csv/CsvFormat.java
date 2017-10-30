@@ -1,5 +1,6 @@
 package org.treeleafj.xmax.export.format.csv;
 
+import lombok.Data;
 import org.treeleafj.xmax.export.ExportException;
 import org.treeleafj.xmax.export.format.*;
 import org.apache.commons.io.IOUtils;
@@ -13,6 +14,7 @@ import java.util.StringTokenizer;
 /**
  * Created by leaf on 2017/4/10.
  */
+@Data
 public class CsvFormat implements Format {
 
     private List<String> source = new ArrayList<String>(0);
@@ -64,19 +66,4 @@ public class CsvFormat implements Format {
         return new CsvOutput(this);
     }
 
-    public String getReadCharset() {
-        return readCharset;
-    }
-
-    public void setReadCharset(String readCharset) {
-        this.readCharset = readCharset;
-    }
-
-    public String getWriteCharset() {
-        return writeCharset;
-    }
-
-    public void setWriteCharset(String writeCharset) {
-        this.writeCharset = writeCharset;
-    }
 }

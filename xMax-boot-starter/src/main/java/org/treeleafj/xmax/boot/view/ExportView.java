@@ -125,7 +125,7 @@ public class ExportView extends AbstractView {
         }
 
         Format format;
-        if (this.suffix.equalsIgnoreCase("csv")) {
+        if ("csv".equalsIgnoreCase(this.suffix)) {
             format = new CsvFormat(in, "UTF-8", "GBK");
         } else {
             format = new ExcelFormat(in);
@@ -154,9 +154,9 @@ public class ExportView extends AbstractView {
                 try {
                     ServletContext ctx = request.getSession().getServletContext();
                     URL url = ctx.getResource(tempalteFile);
-                    if (url != null)
+                    if (url != null) {
                         return true;
-                    else {
+                    } else {
                         logger.error("not found excel tempalte:{}", tempalteFile);
                         return false;
                     }

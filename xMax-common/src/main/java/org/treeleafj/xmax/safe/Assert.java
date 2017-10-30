@@ -142,7 +142,7 @@ public class Assert {
      * @param message
      */
     public static void isNumber(String s, String message, Object... t2) {
-        if (!NumberUtils.isNumber(s)) {
+        if (!NumberUtils.isCreatable(s)) {
             throw createException(message, t2);
         }
     }

@@ -10,10 +10,10 @@ public interface Status {
     /**
      * 状态-启用
      */
-    Integer STATUS_ENABLE = 1;
+    String STATUS_ENABLE = "1";
 
     /**
      * 状态-禁用
      */
-    Integer STATUS_DISABLE = 0;
+    String STATUS_DISABLE = "0";
 }

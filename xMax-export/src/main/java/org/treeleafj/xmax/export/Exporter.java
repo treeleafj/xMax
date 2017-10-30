@@ -37,7 +37,8 @@ public class Exporter {
      * @param out 输出位置
      */
     public void export(OutputStream out) {
-        List<SheetInfo> sheetInfos = this.format.resolveOriginalInfo();
+        List<SheetInfo> sheetInfos = this.format.resolveOriginalInfo();//先解析内容
+        //将内容转为Tag
         List<FormatResolverResult> resolverResults = formatResolver.resolveRows(sheetInfos);
 
         long t = System.currentTimeMillis();

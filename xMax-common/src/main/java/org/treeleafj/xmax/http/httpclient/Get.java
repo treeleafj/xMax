@@ -36,6 +36,7 @@ public class Get extends Http<Get> {
         super(address);
     }
 
+    @Override
     public String send() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         this.send(out);
@@ -46,6 +47,7 @@ public class Get extends Http<Get> {
         }
     }
 
+    @Override
     public void send(OutputStream out) {
         HttpClient httpClient;
         try {

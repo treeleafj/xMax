@@ -38,6 +38,7 @@ public class Post extends Http<Post> {
         super(address);
     }
 
+    @Override
     public String send() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         this.send(out);
@@ -48,6 +49,7 @@ public class Post extends Http<Post> {
         }
     }
 
+    @Override
     public void send(OutputStream out) {
 
         String paramStr = "";

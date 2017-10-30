@@ -19,7 +19,7 @@ public class MobileNumValidator implements Validator<String> {
     @Override
     public boolean validate(String s) {
         //中国手机号码段为11位, 前3位———网络识别号；第4-7位———地区编码；第8-11位———用户号码。
-        if (StringUtils.isBlank(s) || s.length() != 11 || !NumberUtils.isNumber(s)) {
+        if (StringUtils.isBlank(s) || s.length() != 11 || !NumberUtils.isCreatable(s)) {
             return false;
         }
         Matcher m = p.matcher(s);

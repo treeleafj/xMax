@@ -7,6 +7,7 @@ import javax.net.ssl.SSLException;
  */
 public class BrowserCompatHostnameVerifier extends AbstractVerifier {
 
+    @Override
     public final void verify(
             final String host,
             final String[] cns,

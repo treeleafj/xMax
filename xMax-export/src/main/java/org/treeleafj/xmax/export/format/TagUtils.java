@@ -132,9 +132,9 @@ public class TagUtils {
             }
             return v;
         } else {
-            if (tag.equals("true") || tag.equals("false")) {//是boolean值
+            if ("true".equals(tag) || "false".equals(tag)) {//是boolean值
                 return Boolean.parseBoolean(tag);
-            } else if (NumberUtils.isNumber(tag)) {//是数字
+            } else if (NumberUtils.isCreatable(tag)) {//是数字
                 if (tag.contains(".")) {
                     return Double.parseDouble(tag);
                 } else {

@@ -1,5 +1,7 @@
 package org.treeleafj.xmax.date;
 
+import org.treeleafj.xmax.exception.ServiceException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +48,7 @@ public class DateUtils {
         try {
             return df.parse(date);
         } catch (ParseException e) {
-            throw new RuntimeException("日期格式错误", e);
+            throw new ServiceException("日期格式错误", e);
         }
     }
 
