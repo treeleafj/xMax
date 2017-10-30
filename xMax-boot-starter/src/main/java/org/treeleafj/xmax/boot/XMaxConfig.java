@@ -1,13 +1,10 @@
 package org.treeleafj.xmax.boot;
 
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.DateFormatter;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -65,12 +62,6 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
      * 是否添加参数检测拦截器检查参数中的sql注入等问题
      */
     private boolean checkParam = false;
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-        converters.add(fastConverter);
-    }
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
