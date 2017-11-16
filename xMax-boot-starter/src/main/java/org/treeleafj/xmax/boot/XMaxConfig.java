@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
 import org.treeleafj.xmax.boot.handler.*;
+import org.treeleafj.xmax.boot.session.LoginHandlerInterceptor;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
 
@@ -35,6 +36,9 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
 
     @Autowired
     private SqlInjectInterceptor sqlInjectInterceptor;
+
+    @Autowired
+    private LoginHandlerInterceptor loginHandlerInterceptor;
 
     @Autowired
     private ParamHandlerMethodArgumentResolver paramHandlerMethodArgumentResolver;
@@ -62,6 +66,11 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
      * 是否添加参数检测拦截器检查参数中的sql注入等问题
      */
     private boolean checkParam = false;
+
+    /**
+     * 是否启用登录拦截器,判断必须要登录,默认false不启用
+     */
+    private boolean checkLogin = false;
 
     @Override
     public void addFormatters(FormatterRegistry registry) {
@@ -99,6 +108,9 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
         }
         if (printLog) {
             registry.addInterceptor(printLogHandlerInerceptor);//添加接口调用打印
+        }
+        if (checkLogin) {
+            registry.addInterceptor(loginHandlerInterceptor);
         }
         super.addInterceptors(registry);
     }

@@ -24,8 +24,6 @@ public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMet
 
     private String unLoginErrorMessage = "请先登录!";
 
-    private static final SessionKey DEFAULT_SESSION_KEY = new SessionKey("_login_user");
-
     @Autowired(required = false)
     private SessionKey sessionKey;
 
@@ -84,7 +82,7 @@ public class LoginUserSessionHandlerMethodArgumentResolver implements HandlerMet
     @Override
     public void afterPropertiesSet() throws Exception {
         if (this.sessionKey == null) {
-            this.sessionKey = DEFAULT_SESSION_KEY;
+            this.sessionKey = SessionKeyFactory.buildDefaultSessionKey();
         }
     }
 }

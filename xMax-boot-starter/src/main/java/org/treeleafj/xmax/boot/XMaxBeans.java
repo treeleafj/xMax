@@ -3,6 +3,7 @@ package org.treeleafj.xmax.boot;
 import org.springframework.context.annotation.Bean;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
 import org.treeleafj.xmax.boot.handler.*;
+import org.treeleafj.xmax.boot.session.LoginHandlerInterceptor;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 
 /**
@@ -43,5 +44,10 @@ public class XMaxBeans {
     @Bean
     public SqlInjectInterceptor sqlInjectInterceptor() {
         return new SqlInjectInterceptor();
+    }
+
+    @Bean
+    public LoginHandlerInterceptor loginHandlerInterceptor() {
+        return new LoginHandlerInterceptor();
     }
 }
