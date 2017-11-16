@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 /**
  * 异步处理渲染
  *
- * Created by yaoshuhong on 2017/10/13.
+ * Created by leaf on 2017/10/13.
  */
 public class AsyncRender extends Render implements Callable {
 

@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 返回指定状态码
  *
- * Created by yaoshuhong on 2017/10/13.
+ * Created by leaf on 2017/10/13.
  */
 public class StatusRender extends Render {
 
