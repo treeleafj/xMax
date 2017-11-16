@@ -73,15 +73,6 @@ public class PageResult<T> implements Serializable {
     }
 
     /**
-     * 获取当前页码
-     *
-     * @return
-     */
-    public int getPageNo() {
-        return this.pageable.getPageNo();
-    }
-
-    /**
      * 获取总分页数
      *
      * @return
@@ -89,24 +80,6 @@ public class PageResult<T> implements Serializable {
     public long getTotalPage() {
         long l = total / this.pageable.getPageSize();
         return total % this.pageable.getPageSize() == 0 ? l : l + 1;
-    }
-
-    /**
-     * 获取每页大小
-     *
-     * @return
-     */
-    public int getPageSize() {
-        return this.pageable.getPageSize();
-    }
-
-    /**
-     * 获取起始偏移量(从0开始)
-     *
-     * @return
-     */
-    public int getOffset() {
-        return this.pageable.getOffset();
     }
 
     /**
