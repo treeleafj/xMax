@@ -30,6 +30,11 @@ public class DateUtils {
      */
     public static final String DATE_PATTERN = "yyyy-MM-dd";
 
+    /**
+     * HH:mm:ss
+     */
+    public static final String TIME_PATTERN = "HH:mm:ss";
+
     public static String format(Date date, String pattern) {
         DateFormat df = new SimpleDateFormat(pattern);
         return df.format(date);
@@ -58,5 +63,32 @@ public class DateUtils {
 
     public static Date parseDate(String date) {
         return parse(date, DATE_PATTERN);
+    }
+
+    /**
+     * 比较两个日期间相差的分钟数,不满一分钟则不算进去
+     *
+     * @return 相差的分钟数, d1小d2则返回负数
+     */
+    public static long compareMinutesTo(Date d1, Date d2) {
+        return d1.getTime() - d2.getTime() / 1000 / 60;
+    }
+
+    /**
+     * 比较两个日期间相差的秒数,不满一秒钟则不算进去
+     *
+     * @return 相差的秒数, d1小d2则返回负数
+     */
+    public static long compareSecondsTo(Date d1, Date d2) {
+        return d1.getTime() - d2.getTime() / 1000;
+    }
+
+    /**
+     * 比较两个日期间相差的天数,不满一天则不算进去
+     *
+     * @return 相差的天数, d1小d2则返回负数
+     */
+    public static long compareDayTo(Date d1, Date d2) {
+        return d1.getTime() - d2.getTime() / 3600000 / 24;
     }
 }
