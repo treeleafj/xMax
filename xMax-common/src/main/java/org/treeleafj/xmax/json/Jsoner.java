@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * JSON转换工具(默认基于fastjson实现)
+ * JSON转换工具(默认基于Jackson实现)
  *
  * @author leaf
  * @date 2014-1-3 下午6:09:49

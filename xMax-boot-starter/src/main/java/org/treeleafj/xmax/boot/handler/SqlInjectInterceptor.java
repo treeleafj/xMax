@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.treeleafj.xmax.boot.basic.DontCheckParam;
+import org.treeleafj.xmax.boot.basic.IgnoreInject;
 import org.treeleafj.xmax.boot.utils.RequestUtils;
 import org.treeleafj.xmax.json.Jsoner;
 import org.treeleafj.xmax.safe.SqlUtils;
@@ -27,8 +27,11 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
 
         if (o instanceof HandlerMethod) {
             HandlerMethod mh = (HandlerMethod) o;
-            if (mh.hasMethodAnnotation(DontCheckParam.class)) {
-                return true;
+            if (mh.hasMethodAnnotation(IgnoreInject.class)) {
+                IgnoreInject ii = mh.getMethodAnnotation(IgnoreInject.class);
+                if (ii.sql()) {
+                    return true;
+                }
             }
             while (parameterNames.hasMoreElements()) {
                 String name = parameterNames.nextElement();
@@ -36,7 +39,7 @@ public class SqlInjectInterceptor implements HandlerInterceptor {
                 for (String val : vals) {
                     if (SqlUtils.isSqlInject(val)) {
                         String ip = RequestUtils.getIp(httpServletRequest);
-                        log.info("用户端{}传入的参数{}为sql注入, 全部参数为:{}", ip, val, Jsoner.toJson(httpServletRequest.getParameterMap()));
+                        log.warn("用户端{}传入的参数{}为sql注入, 全部参数为:{}", ip, val, Jsoner.toJson(httpServletRequest.getParameterMap()));
                         return false;
                     }
                 }
