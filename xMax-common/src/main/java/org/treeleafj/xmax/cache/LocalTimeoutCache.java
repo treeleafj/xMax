@@ -59,8 +59,8 @@ public class LocalTimeoutCache<K, V> {
             return null;
         }
 
-        long now = System.currentTimeMillis() / 1000;
-        if (now - item.getPutTime().getTime() > timeout) {
+        long now = System.currentTimeMillis();
+        if ((now - item.getPutTime().getTime()) / 1000 > timeout) {
             //超时
             cache.remove(key);
             return null;
