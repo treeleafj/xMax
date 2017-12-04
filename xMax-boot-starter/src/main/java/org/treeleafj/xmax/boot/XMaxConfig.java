@@ -63,6 +63,16 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     private boolean printLog = true;
 
     /**
+     * 打印进来的请求日志
+     */
+    private boolean printIn = true;
+
+    /**
+     * 打印出去的请求日志
+     */
+    private boolean printOut = true;
+
+    /**
      * 是否添加参数检测拦截器检查参数中的sql注入等问题
      */
     private boolean checkParam = false;
@@ -107,7 +117,10 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
             registry.addInterceptor(sqlInjectInterceptor);
         }
         if (printLog) {
-            registry.addInterceptor(printLogHandlerInerceptor);//添加接口调用打印
+            //添加接口调用打印
+            printLogHandlerInerceptor.setPrintIn(printIn);
+            printLogHandlerInerceptor.setPrintOut(printOut);
+            registry.addInterceptor(printLogHandlerInerceptor);
         }
         if (checkLogin) {
             registry.addInterceptor(loginHandlerInterceptor);

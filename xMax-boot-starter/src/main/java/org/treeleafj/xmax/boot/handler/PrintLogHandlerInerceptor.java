@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.treeleafj.xmax.boot.basic.IgnoreLogPrint;
 import org.treeleafj.xmax.exception.BaseException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,29 +14,42 @@ import java.util.Enumeration;
 
 /**
  * 打印接口访问,入参和耗时,以及异常信息
- * <p>
- * Created by leaf on 2015/5/5.
+ *
+ * @author leaf
+ * @date 2015/5/5
  */
 public class PrintLogHandlerInerceptor implements HandlerInterceptor {
 
-    protected Logger log = LoggerFactory.getLogger(PrintLogHandlerInerceptor.class);
+    private Logger log = LoggerFactory.getLogger(PrintLogHandlerInerceptor.class);
 
     private final static char URL_SYMBOL_EQUEST = '=';
 
     private final static char URL_SYMBOL_AND = '&';
 
-    private boolean accessLog = true;
+    /**
+     * 打印进来的请求日志
+     */
+    private boolean printIn = true;
+
+    /**
+     * 打印出去的请求日志
+     */
+    private boolean printOut = true;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
 
-        if (handler instanceof HandlerMethod) {
+        if (handler instanceof HandlerMethod && printIn) {
 
             request.setAttribute("_invokeStartTime", System.currentTimeMillis());
 
-            if (!accessLog) { //如果不打印就直接返回
-                return true;
+            HandlerMethod hm = (HandlerMethod) handler;
+            if (hm.hasMethodAnnotation(IgnoreLogPrint.class)) {
+                IgnoreLogPrint logPrint = hm.getMethodAnnotation(IgnoreLogPrint.class);
+                if (logPrint.ignoreIn()) {
+                    return true;
+                }
             }
 
             StringBuilder sb = new StringBuilder();
@@ -52,7 +66,6 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
                 sb.deleteCharAt(sb.length() - 1);
             }
 
-            HandlerMethod hm = (HandlerMethod) handler;
             String className = hm.getBean().getClass().getSimpleName();
             log.info("开始调用[{}][{}.{}]接口, 传入参数:{}", request.getServletPath(), className, hm.getMethod().getName(), sb);
         }
@@ -67,8 +80,15 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) throws Exception {
 
-        if (handler instanceof HandlerMethod) {
+        if (handler instanceof HandlerMethod && printOut) {
             HandlerMethod hm = (HandlerMethod) handler;
+
+            if (hm.hasMethodAnnotation(IgnoreLogPrint.class)) {
+                IgnoreLogPrint logPrint = hm.getMethodAnnotation(IgnoreLogPrint.class);
+                if (logPrint.ignoreOut()) {
+                    return;
+                }
+            }
 
             String classSimpleName = hm.getBean().getClass().getSimpleName();
             long t = (Long) request.getAttribute("_invokeStartTime");
@@ -85,13 +105,19 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
                     msg += " 出现异常:";
                     log.error(msg, e);
                 }
-            } else if (accessLog) {
+            } else {
                 log.info(msg);
             }
         }
     }
 
-    public void setAccessLog(boolean accessLog) {
-        this.accessLog = accessLog;
+    public PrintLogHandlerInerceptor setPrintIn(boolean printIn) {
+        this.printIn = printIn;
+        return this;
+    }
+
+    public PrintLogHandlerInerceptor setPrintOut(boolean printOut) {
+        this.printOut = printOut;
+        return this;
     }
 }
