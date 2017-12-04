@@ -66,10 +66,27 @@ public abstract class Maths {
         return r.doubleValue();
     }
 
+    /**
+     * 多个数字相除,保留指定位数
+     *
+     * @param scale        要保留的位数
+     * @param roundingMode 小数省略的模式,参见:BigDecimal.ROUND_HALF_UP等
+     * @param v
+     * @return
+     */
+    public static Double divide(int scale, int roundingMode, Double... v) {
+        BigDecimal r = new BigDecimal(v[0].toString());
+        for (int i = 1; i < v.length; i++) {
+            r = r.divide(new BigDecimal(v[i].toString()), scale, roundingMode);
+        }
+        return r.doubleValue();
+    }
+
     public static void main(String[] args) {
         System.out.println(add(0.2, 0.1, 0.1));
         System.out.println(subtract(0.2, 0.1, 0.1, 0.1));
         System.out.println(multiply(0.2, 0.1, 0.1));
         System.out.println(divide(0.2, 0.1, 0.1));
+        System.out.println(divide(2, BigDecimal.ROUND_HALF_UP, 0.211, 0.4));
     }
 }
