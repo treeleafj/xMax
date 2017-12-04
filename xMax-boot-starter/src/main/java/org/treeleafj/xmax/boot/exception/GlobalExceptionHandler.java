@@ -1,5 +1,6 @@
 package org.treeleafj.xmax.boot.exception;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 import org.treeleafj.xmax.boot.XMaxConfig;
 import org.treeleafj.xmax.boot.utils.RequestUtils;
-import org.treeleafj.xmax.boot.utils.UriUtils;
 import org.treeleafj.xmax.exception.BaseException;
 import org.treeleafj.xmax.exception.RetCode;
 
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
         request.setAttribute("_exception", t);
         String path = request.getServletPath();
-        String ext = UriUtils.getExt(path);
+        String ext = FilenameUtils.getExtension(path);
         ErrorInfo errorInfo = new ErrorInfo();
         errorInfo.setException(t);
         errorInfo.setUri(request.getRequestURI());
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 
     protected Object exceptionHandle(HttpServletRequest request, HttpServletResponse response, ErrorInfo errorInfo) {
 
-        boolean printJson = errorInfo.isAjax() || ".json".equals(errorInfo.getExt());
+        boolean printJson = errorInfo.isAjax() || "json".equals(errorInfo.getExt());
         if (printJson) {
             Map model = new HashMap();
             if (errorInfo.getException() instanceof BaseException) {
