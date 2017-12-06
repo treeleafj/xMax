@@ -10,6 +10,11 @@ public abstract class ID {
     private static Sequence sequence = new Sequence();
 
     /**
+     * 生成的ID的后缀
+     */
+    private static String SUFFIX = null;
+
+    /**
      * 生成一个有序,分布式唯一,且24位长度的id(只包含数字和字母,字母都为小写字母)
      *
      * @return
@@ -28,7 +33,7 @@ public abstract class ID {
     }
 
     /**
-     * 18位ID
+     * 18位ID(如果不指定后缀的话)
      * <p>
      * <p>
      * 高效GUID产生算法(sequence),基于Snowflake实现64位自增ID算法。 <br>
@@ -52,6 +57,13 @@ public abstract class ID {
      * @author hubin
      */
     public static String getSequenceString() {
+        if (SUFFIX != null) {
+            return String.valueOf(getSequence()) + SUFFIX;
+        }
         return String.valueOf(getSequence());
+    }
+
+    public static void setSuffix(String suffix) {
+        ID.SUFFIX = suffix;
     }
 }
