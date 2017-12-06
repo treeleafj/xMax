@@ -1,5 +1,6 @@
 package org.treeleafj.xmax.boot.session;
 
+import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -20,21 +21,24 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginHandlerInterceptor implements HandlerInterceptor, InitializingBean {
 
+    /**
+     * 这个是spring自带的错误处理Controller,增对这个,不要做登录拦截
+     */
+    public static final String BASIC_ERROR_CONTROLLER = "BasicErrorController";
+
+    @Setter
     private String unLoginErrorMessage = "请先登录!";
 
+    @Setter
     @Autowired(required = false)
     private SessionKey sessionKey;
-
-    public void setSessionKey(SessionKey sessionKey) {
-        this.sessionKey = sessionKey;
-    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         if (o instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) o;
 
-            if (hm.getBeanType().getSimpleName().equals("BasicErrorController")) {
+            if (BASIC_ERROR_CONTROLLER.equals(hm.getBeanType().getSimpleName())) {
                 return true;
             }
 
@@ -44,7 +48,8 @@ public class LoginHandlerInterceptor implements HandlerInterceptor, Initializing
             }
 
             if (request.getSession(false) == null || request.getSession().getAttribute(sessionKey.getKey()) == null) {
-                throw new ServiceException(RetCode.FAIL_UNLOGIN, unLoginErrorMessage);//未登录,抛出未登录异常
+                //未登录,抛出未登录异常
+                throw new ServiceException(RetCode.FAIL_UNLOGIN, unLoginErrorMessage);
             }
         }
         return true;

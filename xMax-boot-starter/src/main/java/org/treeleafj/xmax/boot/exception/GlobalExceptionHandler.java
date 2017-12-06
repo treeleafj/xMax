@@ -48,7 +48,7 @@ public class GlobalExceptionHandler {
 
         boolean printJson = errorInfo.isAjax() || "json".equals(errorInfo.getExt());
         if (printJson) {
-            Map model = new HashMap();
+            Map model = new HashMap(2);
             if (errorInfo.getException() instanceof BaseException) {
                 BaseException exception = (BaseException) errorInfo.getException();
                 model.put("code", exception.getCode());
