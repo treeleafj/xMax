@@ -1,4 +1,0 @@
-商户号,商户名,商户余额,注册日期
-#foreach item in ${rows}
-${item.merchantNo},${item.name},#call numberFormt.formatYuanFen(${item.balance}|"yyyy-MM-dd"),#call dateForm.formatDate(${item.createTime}|"yyyy-MM-dd")
-#end

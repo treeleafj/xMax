@@ -17,7 +17,6 @@
     <modules>
         <module>xMax-common</module>
         <module>xMax-boot-starter</module>
-        <module>xMax-export</module>
     </modules>
 
     <name>${project.artifactId}</name>
