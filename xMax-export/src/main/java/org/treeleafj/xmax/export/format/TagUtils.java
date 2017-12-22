@@ -103,17 +103,34 @@ public class TagUtils {
             String[] args = arg.split(",");
             List<Object> argObjs = new ArrayList<Object>(args.length);
 
+            Class[] paramTypes = new Class[args.length];
+
             for (int i = 0; i < args.length; i++) {
                 String s = args[i].trim();
                 Object paramValue = parseValue(s, data);
                 argObjs.add(paramValue);
+
+                if (isVar(s) && paramValue != null) {
+                    paramTypes[i] = paramValue.getClass();
+                } else if (paramValue != null) {
+                    //方法调用中如果不是变量标签,则是普通常量,需要转为基本类型(因为在parseValue中,基本类型转Object时,被隐式转换了)
+                    if (paramValue.getClass().equals(Integer.class)) {
+                        paramTypes[i] = int.class;
+                    } else if (paramValue.getClass().equals(Double.class)) {
+                        paramTypes[i] = double.class;
+                    } else if (paramValue.getClass().equals(Boolean.class)) {
+                        paramTypes[i] = boolean.class;
+                    } else {
+                        paramTypes[i] = paramValue.getClass();
+                    }
+                }
             }
 
             Object o = data.get(objName);
             if (o == null) {
                 return null;
             }
-            return invokeMethod(o, methodName, argObjs);
+            return invokeMethod(o, methodName, argObjs, paramTypes);
         } else if (isVar(tag)) {//变量标签
             //${item.xx}
             String name = tag.replace("${", "").replace("}", "");
@@ -147,14 +164,23 @@ public class TagUtils {
         return null;
     }
 
-    private static Object invokeMethod(Object o, String methodName, List<Object> argObjs) {
-        Class[] paramTypes = new Class[argObjs.size()];//参数类型
-        for (int i = 0; i < argObjs.size(); i++) {
+    /**
+     * 调用指定对象的指定方法
+     *
+     * @param o          要调用的对象
+     * @param methodName 要调用的方法名
+     * @param argObjs    参数
+     * @param paramTypes 参数类型(加这个是为了支持基本类型)
+     * @return
+     */
+    private static Object invokeMethod(Object o, String methodName, List<Object> argObjs, Class[] paramTypes) {
+
+        for (int i = 0; i < argObjs.size(); i++) {//检查参数
             if (argObjs.get(i) == null) {
                 return StringUtils.EMPTY;
             }
-            paramTypes[i] = argObjs.get(i).getClass();
         }
+
         Method method = null;
         Class clazz = o.getClass();
         while (clazz != null) {

@@ -82,9 +82,7 @@ public class ExcelOutput implements Output {
             }
             String tag = cell.getStringCellValue();
             Object v = TagUtils.parseValue(tag, data);
-            if (v != null) {
-                cell.setCellValue(v.toString());
-            }
+            cell.setCellValue(v != null ? v.toString() : "");
         }
     }
 
@@ -139,9 +137,7 @@ public class ExcelOutput implements Output {
 
                 String tag = templateCell.getStringCellValue();
                 Object v = TagUtils.parseValue(tag, data);
-                if (v != null) {
-                    cell.setCellValue(v.toString());
-                }
+                cell.setCellValue(v != null ? v.toString() : "");
             }
             data.remove(tags[0]);
 
