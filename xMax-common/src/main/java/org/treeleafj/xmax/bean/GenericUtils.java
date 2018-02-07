@@ -20,7 +20,7 @@ public class GenericUtils {
      * @return
      */
     public static Class getGenericFirst(Object obj) {
-        Type type = (Type) obj.getClass().getGenericSuperclass();
+        Type type = obj.getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) type;
         Class classz = ((Class) pt.getActualTypeArguments()[0]);
         return classz;
@@ -34,9 +34,8 @@ public class GenericUtils {
      * @return
      */
     public static Class getGeneric(Object obj, int index) {
-        Type type = (Type) obj.getClass().getGenericSuperclass();
+        Type type = obj.getClass().getGenericSuperclass();
         ParameterizedType pt = (ParameterizedType) type;
-        log.info("pt:" + pt);
         Class classz = ((Class) pt.getActualTypeArguments()[index]);
         return classz;
     }
