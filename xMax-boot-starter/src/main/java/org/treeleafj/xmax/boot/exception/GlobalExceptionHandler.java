@@ -33,6 +33,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler
     public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
+        if (request.getAttribute("_prePrintLogHandlerFlag") == null) {
+            //说明异常情况导致没有进入PrintLogHandlerInerceptor,那么这里就要直接打印出来
+            log.error("调用[%s]接口出现错误", request.getServletPath(), t);
+        }
         request.setAttribute("_exception", t);
         String path = request.getServletPath();
         String ext = FilenameUtils.getExtension(path);
@@ -54,8 +58,8 @@ public class GlobalExceptionHandler {
                 model.put("code", exception.getCode());
                 model.put("msg", exception.getMessage());
             } else {
-                model.put("code", RetCode.FAIL_UNKNOWN);
-                model.put("msg", "网络繁忙,请稍后尝试!");
+                model.put("code", xMaxConfig.getUnknownErrorCode());
+                model.put("msg", xMaxConfig.getUnknownErrorMsg());
             }
             RequestUtils.writeJson(model, response);
             return null;
@@ -66,8 +70,8 @@ public class GlobalExceptionHandler {
                 mav.addObject("code", exception.getCode());
                 mav.addObject("msg", exception.getMessage());
             } else {
-                mav.addObject("code", RetCode.FAIL_UNKNOWN);
-                mav.addObject("msg", "网络繁忙,请稍后尝试!");
+                mav.addObject("code", xMaxConfig.getUnknownErrorCode());
+                mav.addObject("msg", xMaxConfig.getUnknownErrorMsg());
             }
             return mav;
         }

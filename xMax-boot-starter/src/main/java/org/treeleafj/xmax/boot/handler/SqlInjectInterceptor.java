@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 
 /**
+ * Sql注入拦截器
+ *
  * Created by leaf on 2017/5/18.
  */
 public class SqlInjectInterceptor implements HandlerInterceptor {

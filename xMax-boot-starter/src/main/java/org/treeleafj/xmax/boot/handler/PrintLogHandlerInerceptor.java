@@ -39,6 +39,7 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
+        request.setAttribute("_prePrintLogHandlerFlag", '1');
 
         if (handler instanceof HandlerMethod && printIn) {
 

@@ -14,6 +14,7 @@ import org.treeleafj.xmax.boot.handler.*;
 import org.treeleafj.xmax.boot.session.LoginHandlerInterceptor;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
+import org.treeleafj.xmax.exception.RetCode;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -56,6 +57,16 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
      * 页面错误跳转到的视图页面地址
      */
     private String errorView = "error";
+
+    /**
+     * 未知错误的提示代码
+     */
+    private String unknownErrorCode = RetCode.FAIL_UNKNOWN;
+
+    /**
+     * 未知错误的提示信息
+     */
+    private String unknownErrorMsg = "网络繁忙,请稍后尝试!";
 
     /**
      * 是否打印接口访问日志
