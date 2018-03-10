@@ -28,6 +28,18 @@ public class Assert {
     }
 
     /**
+     * 断言传入的值为null
+     *
+     * @param v
+     * @param msg
+     */
+    public static void isNull(Object v, String msg, Object... t2) {
+        if (v != null) {
+            throw createException(msg, t2);
+        }
+    }
+
+    /**
      * 断言传入的值不为null
      *
      * @param v
