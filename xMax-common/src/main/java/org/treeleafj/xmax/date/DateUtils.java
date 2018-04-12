@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 日期工具
@@ -66,29 +67,12 @@ public class DateUtils {
     }
 
     /**
-     * 比较两个日期间相差的分钟数,不满一分钟则不算进去
-     *
-     * @return 相差的分钟数, d1小d2则返回负数
-     */
-    public static long compareMinutesTo(Date d1, Date d2) {
-        return d1.getTime() - d2.getTime() / 1000 / 60;
-    }
-
-    /**
-     * 比较两个日期间相差的秒数,不满一秒钟则不算进去
-     *
-     * @return 相差的秒数, d1小d2则返回负数
-     */
-    public static long compareSecondsTo(Date d1, Date d2) {
-        return d1.getTime() - d2.getTime() / 1000;
-    }
-
-    /**
-     * 比较两个日期间相差的天数,不满一天则不算进去
+     * 以时间单位比较两个日期间相差的值,结果采用向下取整,即不满一天算0天, 不满一分钟算0分钟
      *
      * @return 相差的天数, d1小d2则返回负数
      */
-    public static long compareDayTo(Date d1, Date d2) {
-        return d1.getTime() - d2.getTime() / 3600000 / 24;
+    public static long compare(Date d1, Date d2, TimeUnit timeUnit) {
+        long t = d1.getTime() - d2.getTime();
+        return timeUnit.convert(t, TimeUnit.MILLISECONDS);
     }
 }
