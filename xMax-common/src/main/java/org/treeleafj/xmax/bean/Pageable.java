@@ -49,10 +49,6 @@ public class Pageable implements Serializable {
         return (this.pageNo - 1) * this.pageSize;
     }
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
     /**
      * 设置页码,从1开始,兼容Extjs等框架
      *

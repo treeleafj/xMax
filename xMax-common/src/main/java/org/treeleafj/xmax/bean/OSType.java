@@ -31,6 +31,11 @@ public enum OSType {
     /**
      * ios
      */
-    IOS
+    IOS,
+
+    /**
+     * widnow phone
+     */
+    WINDOW_PHONE
 
 }
