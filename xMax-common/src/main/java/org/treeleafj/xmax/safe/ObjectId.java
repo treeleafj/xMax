@@ -463,8 +463,10 @@ public final class ObjectId implements Comparable<ObjectId>, Serializable {
         return machinePiece;
     }
 
-    // Creates the process identifier.  This does not have to be unique per class loader because
-    // NEXT_COUNTER will provide the uniqueness.
+    /**
+     * Creates the process identifier.  This does not have to be unique per class loader because
+     * NEXT_COUNTER will provide the uniqueness.
+     */
     private static short createProcessIdentifier() {
         short processId;
         try {

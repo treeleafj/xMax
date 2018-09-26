@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 /**
  * Created by leaf on 2016/3/18.
  */
-public abstract class InetAddressUtils {
+public class InetAddressUtils {
 
     private static final String IPV4_BASIC_PATTERN_STRING =
             "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}" + // initial 3 fields, 0-255 followed by .
@@ -27,12 +27,12 @@ public abstract class InetAddressUtils {
                             "::" +
                             "(([0-9A-Fa-f]{1,4}(:[0-9A-Fa-f]{1,4}){0,5})?)$"); // 0-6 hex fields
 
-    /*
+    /**
      *  The above pattern is not totally rigorous as it allows for more than 7 hex fields in total
      */
     private static final char COLON_CHAR = ':';
 
-    // Must not have more than 7 colons (i.e. 8 fields)
+    /**Must not have more than 7 colons (i.e. 8 fields)*/
     private static final int MAX_COLON_COUNT = 7;
 
     /**

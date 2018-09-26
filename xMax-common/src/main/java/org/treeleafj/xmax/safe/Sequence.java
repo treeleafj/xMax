@@ -38,25 +38,29 @@ public class Sequence {
 
     private static final Logger logger = LoggerFactory.getLogger(Sequence.class);
 
-    /* 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动） */
+    /** 时间起始标记点，作为基准，一般取系统的最近时间（一旦确定不能变动） */
     private final long twepoch = 1288834974657L;
-    private final long workerIdBits = 5L;/* 机器标识位数 */
+    /** 机器标识位数 */
+    private final long workerIdBits = 5L;
     private final long datacenterIdBits = 5L;
     private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
     private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
-    private final long sequenceBits = 12L;/* 毫秒内自增位 */
+    /** 毫秒内自增位 */
+    private final long sequenceBits = 12L;
     private final long workerIdShift = sequenceBits;
     private final long datacenterIdShift = sequenceBits + workerIdBits;
-    /* 时间戳左移动位 */
+    /** 时间戳左移动位 */
     private final long timestampLeftShift = sequenceBits + workerIdBits + datacenterIdBits;
     private final long sequenceMask = -1L ^ (-1L << sequenceBits);
 
     private long workerId;
 
-    /* 数据标识id部分 */
+    /** 数据标识id部分 */
     private long datacenterId;
-    private long sequence = 0L;/* 0，并发控制 */
-    private long lastTimestamp = -1L;/* 上次生产id时间戳 */
+    /** 0，并发控制 */
+    private long sequence = 0L;
+    /** 上次生产id时间戳 */
+    private long lastTimestamp = -1L;
 
     public Sequence() {
         this.datacenterId = getDatacenterId(maxDatacenterId);

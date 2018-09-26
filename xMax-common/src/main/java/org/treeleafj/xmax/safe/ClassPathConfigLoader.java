@@ -34,7 +34,7 @@ public class ClassPathConfigLoader {
             throw new RuntimeException(e);
         }
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
 
         Enumeration<String> enumeration = (Enumeration<String>) properties.propertyNames();
         while (enumeration.hasMoreElements()) {

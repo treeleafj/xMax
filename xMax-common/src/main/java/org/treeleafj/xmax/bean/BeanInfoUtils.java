@@ -9,7 +9,7 @@ import java.lang.reflect.Modifier;
  * @author leaf
  * @date 2014-3-20 下午10:00:44
  */
-public abstract class BeanInfoUtils {
+public class BeanInfoUtils {
 
     /**
      * 判断一个方式是否private修饰的

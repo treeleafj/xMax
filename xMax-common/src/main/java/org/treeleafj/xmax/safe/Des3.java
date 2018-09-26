@@ -12,7 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * <p>
  * Created by leaf on 2015/7/7.
  */
-public abstract class Des3 {
+public class Des3 {
 
     private static final String CHARSET = "UTF-8";
 

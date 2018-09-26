@@ -29,7 +29,7 @@ public class FastBeanCache {
                 //保证线程同步性
                 if (methods == null) {
 
-                    methods = new HashMap<String, PropertiesEntry>();
+                    methods = new HashMap<>();
 
                     Method[] ms = classz.getMethods();
 

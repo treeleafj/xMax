@@ -196,5 +196,9 @@ public abstract class Render implements Serializable {
         return new StatusRender(status);
     }
 
+    /**
+     * 由子类实现的渲染方法
+     * @param response http servlet response
+     */
     public abstract void render(HttpServletResponse response);
 }

@@ -5,7 +5,7 @@ package org.treeleafj.xmax.safe;
  * <p>
  * Created by leaf on 2016/2/19.
  */
-public abstract class ID {
+public class ID {
 
     private static Sequence sequence = new Sequence();
 

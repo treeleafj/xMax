@@ -39,7 +39,6 @@ public class VelocityTemplater extends Templater {
     @Override
     public String parse(Map<String, Object> param) {
 
-//        Template template = ve.getTemplate("com/jleaf/test/netty/template/" + name + ".vm", ENCODING);
         Template template = ve.getTemplate(path, ENCODING);
 
         VelocityContext velocityContext = new VelocityContext();

@@ -56,9 +56,9 @@ public class Rsa {
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
 
-        Key _privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
+        Key key = keyFactory.generatePrivate(pkcs8KeySpec);
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_DETAIL);
-        cipher.init(2, _privateKey);
+        cipher.init(2, key);
         return cipher.doFinal(data);
     }
 
@@ -69,9 +69,9 @@ public class Rsa {
     public static byte[] decryptByPublicKey(byte[] data, byte[] publicKey) throws Exception {
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKey);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
-        Key _publicKey = keyFactory.generatePublic(x509KeySpec);
+        Key key = keyFactory.generatePublic(x509KeySpec);
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_DETAIL);
-        cipher.init(2, _publicKey);
+        cipher.init(2, key);
         return cipher.doFinal(data);
     }
 
@@ -82,9 +82,9 @@ public class Rsa {
     public static byte[] encryptByPublicKey(byte[] data, byte[] publicKey) throws Exception {
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(publicKey);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
-        Key _publicKey = keyFactory.generatePublic(x509KeySpec);
+        Key key = keyFactory.generatePublic(x509KeySpec);
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_DETAIL);
-        cipher.init(1, _publicKey);
+        cipher.init(1, key);
         return cipher.doFinal(data);
     }
 
@@ -95,9 +95,9 @@ public class Rsa {
     public static byte[] encryptByPrivateKey(byte[] data, byte[] privateKey) throws Exception {
         PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(privateKey);
         KeyFactory keyFactory = KeyFactory.getInstance(RSA);
-        Key _privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
+        Key key = keyFactory.generatePrivate(pkcs8KeySpec);
         Cipher cipher = Cipher.getInstance(KEY_ALGORITHM_DETAIL);
-        cipher.init(1, _privateKey);
+        cipher.init(1, key);
         return cipher.doFinal(data);
     }
 

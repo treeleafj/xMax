@@ -13,7 +13,7 @@ import java.util.Random;
  * @author leaf
  * @date 2014-11-9 下午10:23:48
  */
-public abstract class Hex {
+public class Hex {
 
 	private static Logger log = LoggerFactory.getLogger(Hex.class);
 

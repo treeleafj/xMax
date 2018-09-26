@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * @Author leaf
  * 2016/2/24 0024 1:52.
  */
-public abstract class Maths {
+public class Maths {
 
     /**
      * 多个数字相加

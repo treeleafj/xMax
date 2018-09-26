@@ -14,9 +14,9 @@ public class IDCardValidator implements Validator<String> {
 
     private static Map<String, String> cityMap = new HashMap<>();
 
-    private static final String regex = "^(\\d{6})(19|20)(\\d{2})(1[0-2]|0[1-9])(0[1-9]|[1-2][0-9]|3[0-1])(\\d{3})(\\d|X|x)?$";
+    private static final String REGEX = "^(\\d{6})(19|20)(\\d{2})(1[0-2]|0[1-9])(0[1-9]|[1-2][0-9]|3[0-1])(\\d{3})(\\d|X|x)?$";
 
-    private static Pattern pattern = Pattern.compile(regex);
+    private static Pattern pattern = Pattern.compile(REGEX);
 
     static {
         cityMap.put("11", "北京");
@@ -112,12 +112,14 @@ public class IDCardValidator implements Validator<String> {
                 idCardWiSum += Integer.valueOf(idCard.substring(i, i + 1)) * prefix[i];
             }
 
-            int idCardMod = idCardWiSum % 11;//计算出校验码所在数组的位置
-            String idCardLast = idCard.substring(17);//得到最后一位身份证号码
+            //计算出校验码所在数组的位置
+            int idCardMod = idCardWiSum % 11;
+            //得到最后一位身份证号码
+            String idCardLast = idCard.substring(17);
 
             //如果等于2，则说明校验码是10，身份证号码最后一位应该是X
             if (idCardMod == 2) {
-                if (idCardLast.equalsIgnoreCase("x")) {
+                if ("x".equalsIgnoreCase(idCardLast)) {
                     return true;
                 } else {
                     return false;

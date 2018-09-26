@@ -9,5 +9,10 @@ package org.treeleafj.xmax.validate;
  */
 public interface Validator<T> {
 
+    /**
+     * 验证
+     * @param obj 要验证的对象
+     * @return 是否验证通过
+     */
     boolean validate(T obj);
 }
