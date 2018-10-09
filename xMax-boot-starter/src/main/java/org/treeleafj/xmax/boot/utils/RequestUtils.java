@@ -67,9 +67,6 @@ public class RequestUtils {
 
     /**
      * 判断客户端是否ajax请求
-     *
-     * @param request
-     * @return
      */
     public static boolean isAjax(HttpServletRequest request) {
         String ajax = request.getHeader("X-Requested-With");
@@ -78,6 +75,14 @@ public class RequestUtils {
         }
         String accept = request.getHeader("Accept");
         return accept != null && accept.contains("json");
+    }
+
+    /**
+     * 判断客户端是否采用json方式的数据格式请求
+     */
+    public static boolean isJson(HttpServletRequest request) {
+        String contentType = request.getHeader("CONTENT-TYPE");
+        return StringUtils.contains(contentType, "application/json");
     }
 
     /**
