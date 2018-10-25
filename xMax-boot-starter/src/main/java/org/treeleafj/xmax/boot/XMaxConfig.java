@@ -93,12 +93,17 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
      */
     private boolean checkLogin = false;
 
+    /**
+     * 默认错误格式
+     */
+    private String defaultErrorFormat = "html";
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatterForFieldType(Date.class, new DateFormatter() {
 
             @Override
-            public Date parse(String text, Locale locale) throws ParseException {
+            public Date parse(String text, Locale locale) {
                 if (text.length() <= DateUtils.DATE_PATTERN.length()) {
                     return DateUtils.parseDate(text);
                 } else {

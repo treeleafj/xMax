@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
         errorInfo.setException(t);
         errorInfo.setUri(request.getRequestURI());
         errorInfo.setExt(ext);
-        errorInfo.setAjax(RequestUtils.isAjax(request) || RequestUtils.isJson(request));
+        errorInfo.setAjax("json".equals(xMaxConfig.getDefaultErrorFormat()) || RequestUtils.isAjax(request) || RequestUtils.isJson(request));
         return this.exceptionHandle(request, response, errorInfo);
     }
 
