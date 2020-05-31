@@ -8,15 +8,18 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
-import org.treeleafj.xmax.boot.handler.*;
+import org.treeleafj.xmax.boot.handler.ClientInfoHandlerMethodArgumentResolver;
+import org.treeleafj.xmax.boot.handler.ParamHandlerMethodArgumentResolver;
+import org.treeleafj.xmax.boot.handler.PrintLogHandlerInerceptor;
+import org.treeleafj.xmax.boot.handler.RenderHandlerMethodReturnValueHandler;
+import org.treeleafj.xmax.boot.handler.security.SecurityInjectInterceptor;
 import org.treeleafj.xmax.boot.session.LoginHandlerInterceptor;
 import org.treeleafj.xmax.boot.session.LoginUserSessionHandlerMethodArgumentResolver;
 import org.treeleafj.xmax.date.DateUtils;
 import org.treeleafj.xmax.exception.RetCode;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -26,8 +29,8 @@ import java.util.Locale;
  * @date 2017-03-10 16:00
  */
 @Data
-@ConfigurationProperties("xMax")
-public class XMaxConfig extends WebMvcConfigurerAdapter {
+@ConfigurationProperties("xmax")
+public class XMaxConfig implements WebMvcConfigurer {
 
     @Autowired
     private GlobalExceptionHandler globalExceptionHandler;
@@ -36,7 +39,7 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     private PrintLogHandlerInerceptor printLogHandlerInerceptor;
 
     @Autowired
-    private SqlInjectInterceptor sqlInjectInterceptor;
+    private SecurityInjectInterceptor securityInjectInterceptor;
 
     @Autowired
     private LoginHandlerInterceptor loginHandlerInterceptor;
@@ -74,16 +77,6 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     private boolean printLog = true;
 
     /**
-     * 打印进来的请求日志
-     */
-    private boolean printIn = true;
-
-    /**
-     * 打印出去的请求日志
-     */
-    private boolean printOut = true;
-
-    /**
      * 是否添加参数检测拦截器检查参数中的sql注入等问题
      */
     private boolean checkParam = false;
@@ -116,7 +109,6 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
         returnValueHandlers.add(renderHandlerMethodReturnValueHandler);
-        super.addReturnValueHandlers(returnValueHandlers);
     }
 
     @Override
@@ -124,23 +116,19 @@ public class XMaxConfig extends WebMvcConfigurerAdapter {
         argumentResolvers.add(paramHandlerMethodArgumentResolver);
         argumentResolvers.add(clientInfoHandlerMethodArgumentResolver);
         argumentResolvers.add(loginUserSessionHandlerMethodArgumentResolver);
-        super.addArgumentResolvers(argumentResolvers);
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         if (checkParam) {
-            registry.addInterceptor(sqlInjectInterceptor);
+            registry.addInterceptor(securityInjectInterceptor);
         }
         if (printLog) {
             //添加接口调用打印
-            printLogHandlerInerceptor.setPrintIn(printIn);
-            printLogHandlerInerceptor.setPrintOut(printOut);
             registry.addInterceptor(printLogHandlerInerceptor);
         }
         if (checkLogin) {
             registry.addInterceptor(loginHandlerInterceptor);
         }
-        super.addInterceptors(registry);
     }
 }

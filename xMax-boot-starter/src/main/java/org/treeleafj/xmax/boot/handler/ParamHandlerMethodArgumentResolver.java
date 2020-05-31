@@ -26,7 +26,7 @@ public class ParamHandlerMethodArgumentResolver implements HandlerMethodArgument
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
-                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
         Iterator<String> parameterNames = nativeWebRequest.getParameterNames();
         Map<String, String> param = new HashMap<>();
         while (parameterNames.hasNext()) {

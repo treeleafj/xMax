@@ -5,7 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import org.treeleafj.xmax.boot.basic.IgnoreLogPrint;
+import org.treeleafj.xmax.boot.basic.IgnoreAccessLog;
+import org.treeleafj.xmax.boot.exception.GlobalExceptionHandler;
 import org.treeleafj.xmax.exception.BaseException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,28 +27,18 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
 
     private final static char URL_SYMBOL_AND = '&';
 
-    /**
-     * 打印进来的请求日志
-     */
-    private boolean printIn = true;
-
-    /**
-     * 打印出去的请求日志
-     */
-    private boolean printOut = true;
-
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
 
-        request.setAttribute("_prePrintLogHandlerFlag", '1');
+        request.setAttribute(GlobalExceptionHandler.PRINT_LOG_FLAG, 1);
 
-        if (handler instanceof HandlerMethod && printIn) {
+        if (handler instanceof HandlerMethod) {
 
             request.setAttribute("_invokeStartTime", System.currentTimeMillis());
 
             HandlerMethod hm = (HandlerMethod) handler;
-            if (hm.hasMethodAnnotation(IgnoreLogPrint.class)) {
-                IgnoreLogPrint logPrint = hm.getMethodAnnotation(IgnoreLogPrint.class);
+            if (hm.hasMethodAnnotation(IgnoreAccessLog.class)) {
+                IgnoreAccessLog logPrint = hm.getMethodAnnotation(IgnoreAccessLog.class);
                 if (logPrint.ignoreIn()) {
                     return true;
                 }
@@ -57,9 +48,16 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
             Enumeration<String> enumeration = request.getParameterNames();
             while (enumeration.hasMoreElements()) {
                 String name = enumeration.nextElement();
+                String value = request.getParameter(name);
+
+                if (name.contains("password") || name.contains("pwd")) {
+                    //针对密码项不打印
+                    value = "******";
+                }
+
                 sb.append(name);
                 sb.append(URL_SYMBOL_EQUEST);
-                sb.append(request.getParameter(name));
+                sb.append(value);
                 sb.append(URL_SYMBOL_AND);
             }
 
@@ -75,17 +73,17 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception e) {
 
-        if (handler instanceof HandlerMethod && printOut) {
+        if (handler instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) handler;
 
-            if (hm.hasMethodAnnotation(IgnoreLogPrint.class)) {
-                IgnoreLogPrint logPrint = hm.getMethodAnnotation(IgnoreLogPrint.class);
+            if (hm.hasMethodAnnotation(IgnoreAccessLog.class)) {
+                IgnoreAccessLog logPrint = hm.getMethodAnnotation(IgnoreAccessLog.class);
                 if (logPrint.ignoreOut()) {
                     return;
                 }
@@ -110,15 +108,5 @@ public class PrintLogHandlerInerceptor implements HandlerInterceptor {
                 log.info(msg);
             }
         }
-    }
-
-    public PrintLogHandlerInerceptor setPrintIn(boolean printIn) {
-        this.printIn = printIn;
-        return this;
-    }
-
-    public PrintLogHandlerInerceptor setPrintOut(boolean printOut) {
-        this.printOut = printOut;
-        return this;
     }
 }

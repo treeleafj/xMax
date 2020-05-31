@@ -25,7 +25,7 @@ public class RenderHandlerMethodReturnValueHandler implements HandlerMethodRetur
     @Override
     public void handleReturnValue(Object returnValue,
                                   MethodParameter returnType, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest) throws Exception {
+                                  NativeWebRequest webRequest) {
 
         Render render = (Render) returnValue;
         mavContainer.setView(new RenderView(render));

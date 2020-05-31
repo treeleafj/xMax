@@ -14,7 +14,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IgnoreInject {
 
+    /**
+     * 是否校验SQL注入
+     */
     boolean sql() default false;
 
-    boolean html() default false;
+    /**
+     * 是否校验XSS注入
+     */
+    boolean xss() default false;
 }

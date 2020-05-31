@@ -34,7 +34,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor, Initializing
     private SessionKey sessionKey;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
         if (o instanceof HandlerMethod) {
             HandlerMethod hm = (HandlerMethod) o;
 
@@ -56,17 +56,17 @@ public class LoginHandlerInterceptor implements HandlerInterceptor, Initializing
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         if (this.sessionKey == null) {
             this.sessionKey = SessionKeyFactory.buildDefaultSessionKey();
         }

@@ -28,16 +28,20 @@ public class GlobalExceptionHandler {
 
     private Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    public static String PRINT_LOG_FLAG = "_prePrintLogHandlerFlag";
+
     @Autowired
     private XMaxConfig xMaxConfig;
 
     @ExceptionHandler
     public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
-        if (request.getAttribute("_prePrintLogHandlerFlag") == null) {
+        if (request.getAttribute(PRINT_LOG_FLAG) == null) {
             //说明异常情况导致没有进入PrintLogHandlerInerceptor,那么这里就要直接打印出来
             log.error("调用[%s]接口出现错误", request.getServletPath(), t);
         }
+
         request.setAttribute("_exception", t);
+
         String path = request.getServletPath();
         String ext = FilenameUtils.getExtension(path);
         ErrorInfo errorInfo = new ErrorInfo();

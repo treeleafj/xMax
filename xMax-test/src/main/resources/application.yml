@@ -1,0 +1,9 @@
+spring:
+  redis:
+    hostName: localhost
+    port: 6379
+    maxTotal: 20
+xmax:
+  check-param: true
+test:
+    a: 123

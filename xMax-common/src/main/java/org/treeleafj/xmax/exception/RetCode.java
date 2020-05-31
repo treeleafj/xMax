@@ -52,4 +52,10 @@ public abstract class RetCode {
      * 禁止访问异常
      */
     public final static String FAIL_FORBIDDEN = "9992";
+
+    /**
+     * 高危请求
+     */
+    public final static String RISK_REQUEST = "9991";
+
 }

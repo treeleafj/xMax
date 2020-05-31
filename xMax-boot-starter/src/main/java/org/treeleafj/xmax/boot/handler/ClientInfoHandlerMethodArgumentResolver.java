@@ -27,7 +27,7 @@ public class ClientInfoHandlerMethodArgumentResolver implements HandlerMethodArg
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
-                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
+                                  NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
 
         HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
 

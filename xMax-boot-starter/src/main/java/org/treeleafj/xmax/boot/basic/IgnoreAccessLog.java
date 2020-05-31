@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface IgnoreLogPrint {
+public @interface IgnoreAccessLog {
 
     /**
      * 是否忽略请求入参的打印, 默认忽略
