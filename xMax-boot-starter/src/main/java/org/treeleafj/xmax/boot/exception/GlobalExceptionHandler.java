@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.treeleafj.xmax.boot.XMaxConfig;
 import org.treeleafj.xmax.boot.utils.RequestUtils;
 import org.treeleafj.xmax.exception.BaseException;
-import org.treeleafj.xmax.exception.RetCode;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,11 +32,15 @@ public class GlobalExceptionHandler {
     @Autowired
     private XMaxConfig xMaxConfig;
 
+    public GlobalExceptionHandler() {
+        log.info("开启xMax全局异常拦截处理");
+    }
+
     @ExceptionHandler
     public Object handle(HttpServletRequest request, HttpServletResponse response, Throwable t) {
         if (request.getAttribute(PRINT_LOG_FLAG) == null) {
             //说明异常情况导致没有进入PrintLogHandlerInerceptor,那么这里就要直接打印出来
-            log.error("调用[%s]接口出现错误", request.getServletPath(), t);
+            log.error("调用[{}]接口出现错误", request.getServletPath(), t);
         }
 
         request.setAttribute("_exception", t);
