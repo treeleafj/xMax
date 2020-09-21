@@ -91,6 +91,11 @@ public class XMaxConfig implements WebMvcConfigurer {
      */
     private String defaultErrorFormat = "html";
 
+    /**
+     * 是否启用@LoginUser的解析
+     */
+    private boolean enableLoginUser = true;
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatterForFieldType(Date.class, new DateFormatter() {
@@ -115,7 +120,9 @@ public class XMaxConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(paramHandlerMethodArgumentResolver);
         argumentResolvers.add(clientInfoHandlerMethodArgumentResolver);
-        argumentResolvers.add(loginUserSessionHandlerMethodArgumentResolver);
+        if (enableLoginUser) {
+            argumentResolvers.add(loginUserSessionHandlerMethodArgumentResolver);
+        }
     }
 
     @Override
