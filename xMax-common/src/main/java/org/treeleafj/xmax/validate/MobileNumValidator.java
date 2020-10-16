@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class MobileNumValidator implements Validator<String> {
 
-    Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+    private Pattern p = Pattern.compile("^(1[3-9])\\d{9}$");
 
     @Override
     public boolean validate(String s) {
